@@ -12,7 +12,8 @@
 # pow(3, 4) # => 81
 # pow(4, 3) # => 64
 def pow(base, exponent)
-
+    return 1 if exponent == 0
+    base * pow(base, exponent -1)
 end
 
 
@@ -35,9 +36,10 @@ end
 # lucas_number(5)   # =>    11
 # lucas_number(9)   # =>    76
 def lucas_number(n)
-
+    return 2 if n == 0
+    return 1 if n == 1
+    lucas_number(n-1) + lucas_number(n-2)
 end
-
 
 # Write a method, sum_array(array), that takes in an array of numbers.
 # The method should return the total sum of the elements.
@@ -51,9 +53,9 @@ end
 # sum_array([5, 2])         # => 7
 # sum_array([4, 10, -1, 2]) # => 15
 def sum_array(array)
-
+    return 0 if array.empty?
+    array[0] + sum_array(array[1..-1])
 end
-
 
 # Write a method, reverse_string(str), that takes in a string.
 # The method should return the string with it's characters in reverse order.
@@ -67,9 +69,10 @@ end
 # reverse_string("internet")    # => "tenretni"
 # reverse_string("friends")     # => "sdneirf"
 def reverse_string(str)
+    return "" if str.empty?
+    reverse_string(str[1..-1]) +str[0]
 
 end
-
 
 # A 1-dimensional array is also known as a flattened array.
 # Write a method, flatten(data), that accepts a single argument. The
@@ -100,5 +103,12 @@ end
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
 def flatten(data)
-
+    return [data] if !data.kind_of?(Array)
+    arr = []
+    data.each do |ele|
+       if data.kind_of?(Array)
+        arr.concat(flatten(ele))
+       end
+    end
+    arr
 end
